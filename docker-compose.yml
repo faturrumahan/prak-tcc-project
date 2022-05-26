@@ -1,0 +1,54 @@
+version: '3.8'
+services:
+  app:
+    container_name: node_api
+    build: .
+    depends_on:
+      - postgres
+      - mysql
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/usr/src/app/
+      - /usr/src/app/node_modules
+
+  postgres:
+    image: postgres:14.1-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=root
+    ports:
+      - "5432:5432"
+    volumes:
+      # - ./database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql
+      - postgres-volume:/var/lib/postgresql/data
+  
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    hostname: mysql
+    command: --default-authentication-plugin=mysql_native_password --skip-mysqlx
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE_POST: mysql_db2
+    volumes:
+      - ./tmp/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  # PostgreSQL pgAdmin panel accessible at http://localhost:16543/
+  # pgadmin-compose:
+  #   image: dpage/pgadmin4
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: "placeholder@example.com"
+  #     PGADMIN_DEFAULT_PASSWORD: "fakepassword123!"
+  #   ports:
+  #     - "16543:80"
+  #   depends_on:
+  #     - postgres
+volumes:
+  postgres-volume:

@@ -8,9 +8,6 @@ services:
       - mysql
     ports:
       - "8080:8080"
-    volumes:
-      - ./:/usr/src/app/
-      - /usr/src/app/node_modules
 
   postgres:
     image: postgres:14.1-alpine
@@ -24,7 +21,7 @@ services:
       - "5432:5432"
     volumes:
       # - ./database-seed.sql:/docker-entrypoint-initdb.d/database-seed.sql
-      - postgres-volume:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
   
   mysql:
     image: mysql:8.0
@@ -36,7 +33,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE_POST: mysql_db2
     volumes:
-      - ./tmp/mysql:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
     ports:
       - 3306:3306
 
@@ -51,4 +48,6 @@ services:
   #   depends_on:
   #     - postgres
 volumes:
-  postgres-volume:
+  postgres-data:
+  mysql-data:
+  app-data:

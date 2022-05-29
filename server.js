@@ -161,7 +161,7 @@ app.get('/posts', (req, res) => {
   });
 });
 
-//show specific post
+//show specific post from a user
 app.get('/posts/you', (req, res) => {
   const username = req.body.username;
 

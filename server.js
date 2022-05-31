@@ -27,37 +27,6 @@ const postconnection = mysql.createPool({
 
 app.use(express.static("public"));
 
-// app.get("/employees", async (req, res) => {
-//   const results = await client
-//     .query("SELECT * FROM employees")
-//     .then((payload) => {
-//       return payload.rows;
-//     })
-//     .catch(() => {
-//       throw new Error("Query failed");
-//     });
-//   res.setHeader("Content-Type", "application/json");
-//   res.status(200);
-//   res.send(JSON.stringify(results));
-// });
-
-// app.post("/employees", async (req, res) => {
-//   const name = req.body.name;
-//   const title = req.body.title;
-
-//   const results = await client
-//     .query("INSERT INTO employees(name, title) VALUES ($1,$2)", [name, title])
-//     .then((payload) => {
-//       return payload.rows;
-//     })
-//     .catch(() => {
-//       throw new Error("Query failed");
-//     });
-//   res.setHeader("Content-Type", "application/json");
-//   res.status(200);
-//   res.send(JSON.stringify(results));
-// });
-
 //show user
 app.get("/users", async (req, res) => {
   const results = await client
